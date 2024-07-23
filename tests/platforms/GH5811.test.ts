@@ -32,10 +32,10 @@ afterAll(async () => {
 });
 
 test('MsSql should not encode newline', async () => {
-  const originalComment = new Comment('foo\nbar');
+  const originalComment = new Comment('foo\nnew\thtab\vvtab\rreturn');
   await orm.em.persistAndFlush(originalComment);
   orm.em.clear();
 
   const comment = await orm.em.findOne(Comment, { id: originalComment.id });
-  expect(comment?.content).toEqual('foo\nbar');
+  expect(comment?.content).toEqual('foo\nnew\thtab\vvtab\rreturn');
 });
